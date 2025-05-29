@@ -3,22 +3,20 @@ import re
 from collections.abc import Callable
 
 from mcp.server.fastmcp.prompts import Prompt
-from managers.prompt import BundlePromptManager
-
 from mcp.server.fastmcp.resources import (
     FunctionResource,
     Resource,
     ResourceTemplate,
 )
-from managers.resource import BundleResourceManager
-
 from mcp.server.fastmcp.tools import Tool
-from managers.tool import BundleToolManager
-
 from mcp.types import (
     AnyFunction,
     ToolAnnotations,
 )
+
+from modular_mcp.managers.prompt import BundlePromptManager
+from modular_mcp.managers.resource import BundleResourceManager
+from modular_mcp.managers.tool import BundleToolManager
 
 
 class Bundle:
@@ -26,7 +24,9 @@ class Bundle:
         self,
         tools: list[Tool] | None = None,
     ):
-        self._tool_manager = BundleToolManager(tools=tools, warn_on_duplicate_tools=True)
+        self._tool_manager = BundleToolManager(
+            tools=tools, warn_on_duplicate_tools=True
+        )
         self._resource_manager = BundleResourceManager(warn_on_duplicate_resources=True)
         self._prompt_manager = BundlePromptManager(warn_on_duplicate_prompts=True)
 
@@ -259,6 +259,6 @@ class Bundle:
             return func
 
         return decorator
-    
+
     def get_prompts(self) -> dict[str, Prompt]:
         return self._prompt_manager.get_all_prompts()

@@ -1,4 +1,4 @@
-from mcp.server.fastmcp.prompts import PromptManager, Prompt
+from mcp.server.fastmcp.prompts import Prompt, PromptManager
 
 
 class BundlePromptManager(PromptManager):
